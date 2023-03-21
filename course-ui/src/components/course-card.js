@@ -47,7 +47,7 @@ export default function CourseCard({ item = {} }) {
             <div>
                 <CardActions>
                     <Box sx={{ width: '100%' }}>
-                        {(trueChapter && trueChapter.length && trueChapter[0].courseId) === item._id ? <LinearProgressWithLabel value={(trueChapter.length / localChapter.length) * 100} /> : null}
+                        {(trueChapter && trueChapter.length && trueChapter[0].courseId) === item._id ? <LinearProgressWithLabel value={(trueChapter.length / localChapter.length) * 100} /> : <LinearProgressWithLabel value={0 * 100} />}
                     </Box>
                 </CardActions>
                 <CardActions>
