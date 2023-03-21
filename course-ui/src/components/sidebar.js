@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
-import { styled } from '@mui/material';
 import { useParams } from 'react-router-dom';
-import { getAllChapterByCourseId } from '../services';
+import { styled } from '@mui/material';
+import { CourseContext } from '../App';
 const Tabs = styled(NavLink)(`
     font-size:20px;
     margin:20px;
@@ -13,26 +13,26 @@ const Tabs = styled(NavLink)(`
 
 const Sidebar = ({ children }) => {
 
-    const [chapters, setChapters] = useState([]);
-
-    const params = useParams();
-
-    const getAllChapter = async () => {
-        let { data } = await getAllChapterByCourseId(params.courseId)
-        setChapters(data)
-    }
-
-    useEffect(() => {
-        getAllChapter();
-    }, [])
+    const { courseId } = useParams();
+    const { chapters } = useContext(CourseContext);
 
     return (
         <div className="container">
             <div className="sidebar">
+                <div style={{
+                    marginTop: 20,
+                    textAlign: 'left',
+                    fontSize: 20,
+                    fontWeight: 'bold',
+                    borderBottom: '2px solid white',
+                    width: 120
+                }}>
+                    Chapter List
+                </div>
                 {
                     chapters && chapters.map((item, index) => (
                         <Tabs
-                            to={`/${params.courseId}/${item._id}`}
+                            to={`/${courseId}/${item._id}`}
                             key={index}
                             style={({ isActive }) => ({
                                 color: isActive ? '#fff' : 'gray',

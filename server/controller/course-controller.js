@@ -9,14 +9,3 @@ export const getAllCourse = async (req, res) => {
         res.status(409).json({ "message": error.message })
     }
 }
-
-export const getAllChapterByCourseId = async (req, res) => {
-    try {
-        let course = await Course.find({ _id: req.params.id });
-        res.status(200).json(course[0].chapter);
-
-    } catch (error) {
-        res.status(409).json({ "message": error.message })
-    }
-}
-

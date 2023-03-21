@@ -7,38 +7,53 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import logo from '../logo.svg'
 import { useNavigate } from 'react-router-dom';
-
+import { LinearProgressWithLabel } from './progressbar';
+import Box from '@mui/material/Box';
 
 export default function CourseCard({ item = {} }) {
 
     const navigate = useNavigate();
 
+    let localChapter = JSON.parse(localStorage.getItem('chapters'));
+    let trueChapter = localChapter && localChapter.filter((item) => item.view);
     return (
         <Card sx={{
-            maxWidth: 345,
-            height: 400,
+            maxWidth: 365,
+            height: 450,
             margin: 10,
             border: "1px solid",
             padding: "10px",
-            boxShadow: "5px 7px #a2b0bd"
+            boxShadow: "5px 7px #a2b0bd",
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
         }}>
-            <CardMedia
-                component="img"
-                alt="green iguana"
-                height="140"
-                image={item.name === "Redux Toolkit" ? "https://redux-toolkit.js.org/img/redux.svg" : logo}
-            />
-            <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
-                    {item.name}
-                </Typography>
-                <Typography style={{ textAlign: 'left' }} variant="body2" color="text.secondary">
-                    {item.description}
-                </Typography>
-            </CardContent>
-            <CardActions>
-                <Button size="medium" onClick={() => navigate(`/${item._id}/${item.chapter[0]._id}`)}>Learn More</Button>
-            </CardActions>
+            <div>
+                <CardMedia
+                    component="img"
+                    alt="green iguana"
+                    height="140"
+                    image={item.name === "Redux Toolkit" ? "https://redux-toolkit.js.org/img/redux.svg" : logo}
+                />
+                <CardContent>
+                    <Typography gutterBottom variant="h5" component="div">
+                        {item.name}
+                    </Typography>
+                    <Typography style={{ textAlign: 'left' }} variant="body2" color="text.secondary">
+                        {item.description}
+                    </Typography>
+                </CardContent>
+            </div>
+            <div>
+                <CardActions>
+                    <Box sx={{ width: '100%' }}>
+                        {(trueChapter && trueChapter.length && trueChapter[0].courseId) === item._id ? <LinearProgressWithLabel value={(trueChapter.length / localChapter.length) * 100} /> : null}
+                    </Box>
+                </CardActions>
+                <CardActions>
+                    <Button size="medium" onClick={() => navigate(`/${item._id}`)}>Learn More</Button>
+                </CardActions>
+            </div>
         </Card>
     );
 }

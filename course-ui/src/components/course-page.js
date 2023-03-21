@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import CourseCard from './course-card';
 import { FormGroup, styled, Typography } from '@mui/material';
 import { useContext } from 'react';
 import { CourseContext } from '../App';
+
 const Container = styled(FormGroup)(`
     border-radius:10px;
     margin:5% auto 0 auto;
@@ -11,9 +12,13 @@ const Container = styled(FormGroup)(`
     },
 `)
 
-const Courses = () => {
+const Courses = ({ getAllCourseData }) => {
 
-    const courses = useContext(CourseContext);
+    const { courses } = useContext(CourseContext);
+    useEffect(() => {
+        getAllCourseData()
+    }, []);
+
     return (
         <Container style={{ justifyContent: 'center' }}>
             <Typography variant='h3'>My Courses</Typography>
