@@ -15,7 +15,8 @@ export default function CourseCard({ item = {} }) {
     const navigate = useNavigate();
 
     let localChapter = JSON.parse(localStorage.getItem('chapters'));
-    let trueChapter = localChapter && localChapter.filter((item) => item.view);
+    let viewedChapter = localChapter && localChapter.filter((item) => item.view);
+    
     return (
         <Card sx={{
             maxWidth: 365,
@@ -47,7 +48,7 @@ export default function CourseCard({ item = {} }) {
             <div>
                 <CardActions>
                     <Box sx={{ width: '100%' }}>
-                        {(trueChapter && trueChapter.length && trueChapter[0].courseId) === item._id ? <LinearProgressWithLabel value={(trueChapter.length / localChapter.length) * 100} /> : <LinearProgressWithLabel value={0 * 100} />}
+                        {(viewedChapter && viewedChapter.length && viewedChapter[0].courseId) === item._id ? <LinearProgressWithLabel value={(viewedChapter.length / localChapter.length) * 100} /> : <LinearProgressWithLabel value={0 * 100} />}
                     </Box>
                 </CardActions>
                 <CardActions>
